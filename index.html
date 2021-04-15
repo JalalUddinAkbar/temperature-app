@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input type="text" id="location" class="form-control" value="" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button id="search" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id="icon" src="//cdn.weatherapi.com/weather/64x64/day/116.png" alt="">
+            <h1 id="display-location" >Dhaka</h1>
+            <h2 id="country" >Bangladesh</h2>
+            <h3><span id="temp">23</span>&deg;C</h3>
+            <h1 id="condition" class="lead">Cloudy</h1>
+            <h1 id="localtime" class="lead" >2021-04-14 17:48</h1>
+        </div>
+    </div>
+
+<script>
+    
+
+    var input = document.getElementById('search');
+    input.addEventListener('click',  doSomething);
+
+    // input.addEventListener('keyup', (e) =>{
+    //     if(e.keyCode === 13){
+    //         console.log(e.target.value);
+    //     }
+    // })
+    
+
+    function doSomething(){
+        var inputValue = document.getElementById('location').value;  
+        fetch('http://api.weatherapi.com/v1/current.json?key=f7724a299286426e839164346211404&q='+inputValue+'&aqi=no')
+        .then(res => res.json())
+        .then(data => {
+        document.getElementById('display-location').innerText = data.location.name;
+        document.getElementById('country').innerText = data.location.country;
+        document.getElementById('location').value = '';
+        document.getElementById('temp').innerText = data.current.temp_c;
+        document.getElementById('condition').innerText = data.current.condition.text;
+        document.getElementById('icon').setAttribute('src',data.current.condition.icon);
+        document.getElementById('localtime').innerText = data.location.localtime;
+        
+    }) 
+     
+        .catch(error => alert('Put Correct One', error));
+
+    }
+ 
+
+   
+</script>
+
+</body>
+
+</html>
