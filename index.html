@@ -52,7 +52,7 @@
 
     function doSomething(){
         var inputValue = document.getElementById('location').value;  
-        fetch('http://api.weatherapi.com/v1/current.json?key=f7724a299286426e839164346211404&q='+inputValue+'&aqi=no')
+        fetch('https://api.weatherapi.com/v1/current.json?key=f7724a299286426e839164346211404&q='+inputValue+'&aqi=no')
         .then(res => res.json())
         .then(data => {
         document.getElementById('display-location').innerText = data.location.name;
